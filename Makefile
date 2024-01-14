@@ -6,12 +6,12 @@
 #    By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/14 14:06:52 by hannes            #+#    #+#              #
-#    Updated: 2024/01/14 17:22:47 by hannes           ###   ########.fr        #
+#    Updated: 2024/01/14 21:19:12 by hannes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 SRC_DIR = src
 OBJ_DIR = objs
 SRCS = main.c philosopher.c utils.c

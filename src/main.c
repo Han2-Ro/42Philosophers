@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/14 17:30:14 by hannes           ###   ########.fr       */
+/*   Updated: 2024/01/14 22:13:05 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,24 @@ t_philo	*init_philos(const t_config config)
 	{
 		philos[i].id = i + 1;
 		philos[i].config = &config;
-		if (!pthread_create(&philos[i].thread, NULL, &philo_routine, &philos[i]))
+		if (pthread_create(&philos[i].thread, NULL, &philo_routine, &philos[i]))
 			return (free(philos), NULL);
+		i++;
 	}
 	return (philos);
+}
+
+void	join_philos(t_philo *philos, const t_config config)
+{
+	int	i;
+
+	i = 0;
+	while (i < config.number_of_philosophers)
+	{
+		if (pthread_join(philos[i].thread, NULL))
+			return ;
+		i++;
+	}
 }
 
 int	main(int argc, const char *argv[])
@@ -73,5 +87,6 @@ int	main(int argc, const char *argv[])
 		return (1);
 	if (init_philos(config) == NULL)
 		return (1);
+	join_philos(init_philos(config), config);
 	return (0);
 }
