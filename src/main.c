@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/14 17:20:58 by hannes           ###   ########.fr       */
+/*   Updated: 2024/01/14 17:30:14 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	main(int argc, const char *argv[])
 		return (1);
 	}
 	if (init_data(&config, argc, argv) == 1)
+		return (1);
+	if (init_philos(config) == NULL)
 		return (1);
 	return (0);
 }
