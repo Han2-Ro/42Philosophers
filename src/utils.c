@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/15 13:20:00 by hannes           ###   ########.fr       */
+/*   Updated: 2024/01/15 18:02:04 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res);
+}
+
+unsigned long long	get_time_ms(void)
+{
+	struct timeval	time;
+	unsigned long long	time_ms;
+
+	gettimeofday(&time, NULL);
+	time_ms = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	return (time_ms);
 }
 
 void	print_philos(t_philo *philos, const t_config config)
