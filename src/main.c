@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/14 22:13:05 by hannes           ###   ########.fr       */
+/*   Updated: 2024/01/15 13:47:15 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	init_data(t_config *config, int argc, const char *argv[])
 	return (0);
 }
 
-t_philo	*init_philos(const t_config config)
+t_philo	*init_philos(const t_config config, pthread_mutex_t *forks)
 {
 	t_philo	*philos;
 	int		i;
@@ -55,7 +55,34 @@ t_philo	*init_philos(const t_config config)
 			return (free(philos), NULL);
 		i++;
 	}
+	i = 0;
+	while (i < config.number_of_philosophers - 1)
+	{
+		philos[i].forks[0] = forks[i];
+		philos[i].forks[1] = forks[i + 1];
+		i++;
+	}
+	philos[i].forks[0] = forks[i];
+	philos[i].forks[1] = forks[0];
 	return (philos);
+}
+
+pthread_mutex_t	*init_forks(const t_config config)
+{
+	pthread_mutex_t	*forks;
+	int				i;
+
+	forks = malloc(sizeof(pthread_mutex_t) * config.number_of_philosophers);
+	if (!forks)
+		return (NULL);
+	i = 0;
+	while (i < config.number_of_philosophers)
+	{
+		if (pthread_mutex_init(&forks[i], NULL) != 0)
+			return (free(forks), NULL);
+		i++;
+	}
+	return (forks);
 }
 
 void	join_philos(t_philo *philos, const t_config config)
@@ -73,7 +100,9 @@ void	join_philos(t_philo *philos, const t_config config)
 
 int	main(int argc, const char *argv[])
 {
-	t_config	config;
+	t_config		config;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -85,8 +114,10 @@ int	main(int argc, const char *argv[])
 	}
 	if (init_data(&config, argc, argv) == 1)
 		return (1);
-	if (init_philos(config) == NULL)
+	forks = init_forks(config);
+	philos = init_philos(config, forks);
+	if (philos == NULL)
 		return (1);
-	join_philos(init_philos(config), config);
+	join_philos(philos, config);
 	return (0);
 }

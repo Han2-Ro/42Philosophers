@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/14 17:20:04 by hannes           ###   ########.fr       */
+/*   Updated: 2024/01/15 13:36:45 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@ typedef struct s_config
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
-	int			forks[2];
+	pthread_t		thread;
+	int				id;
+	pthread_mutex_t	forks[2];
 	const t_config	*config;
-	int			*stop;
-}				t_philo;
+	int				*stop;
+}					t_philo;
 
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 void	*philo_routine(void *arg);
+void	print_philos(t_philo *philos, const t_config config);
 
 #endif
