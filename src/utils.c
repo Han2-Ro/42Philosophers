@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/15 19:40:54 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/17 15:22:45 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,9 @@ void	print_philos(t_philo *philos, const t_data data)
 		printf("Philosopher %i, thread %li\n", philos[i].id, philos[i].thread);
 		i++;
 	}
+}
+
+void	log_philo(t_philo *philo, char *msg)
+{
+	printf("%llu: %i %s\n", get_time_ms(), philo->id, msg);
 }

@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/17 14:42:08 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/17 15:22:45 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	take_forks(t_philo *philo)
 	if (*philo->forks[0] == 0 && *philo->forks[1] == 0)
 	{
 		*philo->forks[0] = 1;
-		printf("%llu: %i has taken a fork\n", get_time_ms(), philo->id);
+		log_philo(philo, "has taken a fork");
 		*philo->forks[1] = 1;
-		printf("%llu: %i has taken a fork\n", get_time_ms(), philo->id);
+		log_philo(philo, "has taken a fork");
 		ret = 1;
 	}
 	pthread_mutex_unlock(&philo->data->fork_mutex);
@@ -37,7 +37,7 @@ void	eat(t_philo *philo)
 	{
 		usleep(500);
 	}
-	printf("%llu: %i is eating\n", get_time_ms(), philo->id);
+	log_philo(philo, "is eating");
 	philo->last_meal = get_time_ms();
 	philo->meals_eaten++;
 	usleep(philo->data->time_to_eat * 1000);
@@ -49,13 +49,13 @@ void	eat(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-	printf("%llu: %i is sleeping\n", get_time_ms(), philo->id);
+	log_philo(philo, "is sleeping");
 	usleep(philo->data->time_to_sleep * 1000);
 }
 
 void	think(t_philo *philo)
 {
-	printf("%llu: %i is thinking\n", get_time_ms(), philo->id);
+	log_philo(philo, "is thinking");
 }
 
 void	*philo_routine(void *arg)

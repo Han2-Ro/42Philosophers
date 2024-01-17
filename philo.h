@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/17 14:06:00 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/17 15:22:45 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philo
 
 int				ft_atoi(const char *str);
 unsigned long long	get_time_ms(void);
+void			log_philo(t_philo *philo, char *msg);
 void			*philo_routine(void *arg);
 void			print_philos(t_philo *philos, const t_data data);
 void			monitoring(t_data *data, t_philo *philos);
