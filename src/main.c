@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/15 19:57:03 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/17 14:05:06 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,18 @@ int	init_data(t_data *data, int argc, const char *argv[])
 		}
 	}
 	else
-		data->number_of_times_each_philo_must_eat = -1;
+		data->number_of_times_each_philo_must_eat = 2147483647;
 	return (0);
 }
 
-t_philo	*init_philos(t_data data, t_fork *forks)
+int init_mutexes(t_data *data)
+{
+	if (pthread_mutex_init(&data->fork_mutex, NULL))
+		return (1);
+	return (0);
+}
+
+t_philo	*init_philos(t_data data, int *forks)
 {
 	t_philo	*philos;
 	int		i;
@@ -70,20 +77,18 @@ t_philo	*init_philos(t_data data, t_fork *forks)
 	return (philos);
 }
 
-t_fork	*init_forks(const t_data data)
+int	*init_forks(const t_data data)
 {
-	t_fork	*forks;
-	int		i;
+	int	*forks;
+	int	i;
 
-	forks = malloc(sizeof(t_fork) * data.number_of_philosophers);
+	forks = malloc(sizeof(int) * data.number_of_philosophers);
 	if (!forks)
 		return (NULL);
 	i = 0;
 	while (i < data.number_of_philosophers)
 	{
-		forks[i].available = 1;
-		if (pthread_mutex_init(&forks[i].mutex, NULL) != 0)
-			return (free(forks), NULL);
+		forks[i] = 0;
 		i++;
 	}
 	return (forks);
@@ -106,7 +111,7 @@ int	main(int argc, const char *argv[])
 {
 	t_data	data;
 	t_philo	*philos;
-	t_fork	*forks;
+	int		*forks;
 
 	if (argc != 5 && argc != 6)
 	{
