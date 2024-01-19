@@ -6,7 +6,7 @@
 #    By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/14 14:06:52 by hannes            #+#    #+#              #
-#    Updated: 2024/01/15 19:39:55 by hrother          ###   ########.fr        #
+#    Updated: 2024/01/19 14:26:23 by hrother          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread -g
 SRC_DIR = src
 OBJ_DIR = objs
-SRCS = main.c philosopher.c monitoring.c utils.c
+SRCS = main.c philosopher.c monitoring.c init.c utils.c
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 NAME = philo
 RM = rm -fr
