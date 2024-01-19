@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/17 15:22:45 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:57:55 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	ft_atoi(const char *str)
 	return (res);
 }
 
-unsigned long long	get_time_ms(void)
+unsigned long	get_time_ms(void)
 {
 	struct timeval	time;
-	unsigned long long	time_ms;
+	unsigned long	time_ms;
 
 	gettimeofday(&time, NULL);
 	time_ms = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
@@ -53,5 +53,7 @@ void	print_philos(t_philo *philos, const t_data data)
 
 void	log_philo(t_philo *philo, char *msg)
 {
-	printf("%llu: %i %s\n", get_time_ms(), philo->id, msg);
+	pthread_mutex_lock(&philo->data->log_mutex);
+	printf("%lu: %i %s\n", get_time_ms(), philo->id, msg);
+	pthread_mutex_unlock(&philo->data->log_mutex);
 }

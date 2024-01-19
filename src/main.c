@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/17 15:00:41 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/19 13:38:45 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,37 @@ int	init_data(t_data *data, int argc, const char *argv[])
 	return (0);
 }
 
-int init_mutexes(t_data *data)
+int	init_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->fork_mutex, NULL))
+		return (1);
+	if (pthread_mutex_init(&data->log_mutex, NULL))
+		return (1);
+	if (pthread_mutex_init(&data->stop_mutex, NULL))
+		return (1);
+	if (pthread_mutex_init(&data->meals_mutex, NULL))
 		return (1);
 	return (0);
 }
 
-t_philo	*init_philos(t_data data, int *forks)
+void	destroy_mutexes(t_data *data)
+{
+	pthread_mutex_destroy(&data->fork_mutex);
+	pthread_mutex_destroy(&data->log_mutex);
+	pthread_mutex_destroy(&data->stop_mutex);
+	pthread_mutex_destroy(&data->meals_mutex);
+}
+
+t_philo	*init_philos(t_data *data, int *forks)
 {
 	t_philo	*philos;
 	int		i;
 
-	philos = malloc(sizeof(t_philo) * data.number_of_philosophers);
+	philos = malloc(sizeof(t_philo) * data->number_of_philosophers);
 	if (!philos)
 		return (NULL);
 	i = 0;
-	while (i < data.number_of_philosophers - 1)
+	while (i < data->number_of_philosophers - 1)
 	{
 		philos[i].forks[0] = &forks[i];
 		philos[i].forks[1] = &forks[i + 1];
@@ -64,10 +78,10 @@ t_philo	*init_philos(t_data data, int *forks)
 	philos[i].forks[0] = &forks[i];
 	philos[i].forks[1] = &forks[0];
 	i = 0;
-	while (i < data.number_of_philosophers)
+	while (i < data->number_of_philosophers)
 	{
 		philos[i].id = i + 1;
-		philos[i].data = &data;
+		philos[i].data = data;
 		philos[i].last_meal = get_time_ms();
 		philos[i].meals_eaten = 0;
 		if (pthread_create(&philos[i].thread, NULL, &philo_routine, &philos[i]))
@@ -106,7 +120,12 @@ void	join_philos(t_philo *philos, const t_data data)
 	}
 }
 
-int	main(int argc, const char *argv[])
+//TODO: fix possible data races (more mutexes!)
+//TODO: exit immediately on exit condition
+//TODO: one mutex per fork
+//TODO: refactor code to shorter functions
+//TODO: norminette
+int	main(const int argc, const char *argv[])
 {
 	t_data	data;
 	t_philo	*philos;
@@ -126,13 +145,13 @@ int	main(int argc, const char *argv[])
 	forks = init_forks(data);
 	if (forks == NULL)
 		return (1);
-	philos = init_philos(data, forks);
+	philos = init_philos(&data, forks);
 	if (philos == NULL)
 		return (free(forks), 1);
 	monitoring(&data, philos);
 	join_philos(philos, data);
 	free(philos);
 	free(forks);
-	pthread_mutex_destroy(&data.fork_mutex);
+	destroy_mutexes(&data);
 	return (0);
 }

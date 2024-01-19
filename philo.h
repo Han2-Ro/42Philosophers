@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/17 15:22:45 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/19 12:01:10 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ typedef struct s_data
 	unsigned int	number_of_times_each_philo_must_eat;
 	int				stop;
 	pthread_mutex_t	fork_mutex;
+	pthread_mutex_t	log_mutex;
+	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t	meals_mutex;
 }				t_data;
 
 typedef struct s_philo
@@ -37,12 +40,12 @@ typedef struct s_philo
 	int				id;
 	int				*forks[2];
 	t_data			*data;
-	unsigned long long		last_meal;
+	unsigned long	last_meal;
 	unsigned int	meals_eaten;
 }					t_philo;
 
 int				ft_atoi(const char *str);
-unsigned long long	get_time_ms(void);
+unsigned long	get_time_ms(void);
 void			log_philo(t_philo *philo, char *msg);
 void			*philo_routine(void *arg);
 void			print_philos(t_philo *philos, const t_data data);
