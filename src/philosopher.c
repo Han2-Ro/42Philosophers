@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/24 13:49:08 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/24 14:12:46 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	take_forks(t_philo *philo)
 	ret = 0;
 	pthread_mutex_lock(&philo->data->fork_mutex);
 	//printf("%llu: %i tries to take forks\n", get_time_ms(), philo->id);
-	if (*philo->forks[0] == 0 && *philo->forks[1] == 0)
+	if (*philo->forks[0] == 0 && *philo->forks[1] == 0 && check_stop(philo) == 0)
 	{
 		*philo->forks[0] = 1;
 		log_philo(philo, "has taken a fork");

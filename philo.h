@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/19 14:28:59 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/24 14:20:06 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				ft_atoi(const char *str);
 unsigned long	get_time_ms(void);
 void			log_philo(t_philo *philo, char *msg);
 void			*philo_routine(void *arg);
-void			print_philos(t_philo *philos, const t_data data);
+void			print_philos(t_philo *philos, const t_data *data);
 void			monitoring(t_data *data, t_philo *philos);
 int				init_all(const int argc, const char **argv, t_data *data, t_philo **philos, int **forks);
 
