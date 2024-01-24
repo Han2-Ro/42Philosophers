@@ -6,11 +6,22 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/19 13:42:04 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/24 13:49:08 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+int	check_stop(t_philo *philo)
+{
+	int	ret;
+
+	pthread_mutex_lock(&philo->data->stop_mutex);
+	ret = philo->data->stop;
+	//printf("%i stop: %i\n", philo->id, ret);
+	pthread_mutex_unlock(&philo->data->stop_mutex);
+	return (ret);
+}
 
 int	take_forks(t_philo *philo)
 {
@@ -35,9 +46,9 @@ void	eat(t_philo *philo)
 {
 	while (take_forks(philo) == 0)
 	{
-		int ms_since_last_meal = get_time_ms() - philo->last_meal;
-		if (ms_since_last_meal != 0)
-			usleep(500);
+		if (check_stop(philo) == 1)
+			return ;
+		usleep(500);
 	}
 	log_philo(philo, "is eating");
 	pthread_mutex_lock(&philo->data->meals_mutex);
@@ -62,16 +73,6 @@ void	think(t_philo *philo)
 	log_philo(philo, "is thinking");
 }
 
-int	check_stop(t_philo *philo)
-{
-	int	ret;
-
-	pthread_mutex_lock(&philo->data->stop_mutex);
-	ret = philo->data->stop;
-	pthread_mutex_unlock(&philo->data->stop_mutex);
-	return (ret);
-}
-
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -81,10 +82,10 @@ void	*philo_routine(void *arg)
 	{
 		eat(philo);
 		if (check_stop(philo) == 1)
-			return (NULL);
+			break ;
 		sleeping(philo);
 		if (check_stop(philo) == 1)
-			return (NULL);
+			break ;
 		think(philo);
 	}
 	return (NULL);

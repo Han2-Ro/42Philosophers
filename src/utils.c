@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/19 11:57:55 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/24 14:00:00 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_philos(t_philo *philos, const t_data data)
 	i = 0;
 	while (i < data.number_of_philosophers)
 	{
-		printf("Philosopher %i, thread %li\n", philos[i].id, philos[i].thread);
+		printf("Philosopher %i, thread %li, meals_eaten %i\n", philos[i].id, philos[i].thread, philos[i].meals_eaten);
 		i++;
 	}
 }

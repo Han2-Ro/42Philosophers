@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/19 14:28:49 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/24 13:59:08 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(const int argc, const char *argv[])
 	philos = NULL;
 	init_all(argc, argv, &data, &philos, &forks);
 	monitoring(&data, philos);
+	print_philos(philos, data);
 	join_philos(philos, data);
 	free(philos);
 	free(forks);

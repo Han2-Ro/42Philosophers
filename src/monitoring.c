@@ -6,13 +6,13 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/19 13:18:27 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/24 13:57:17 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	check_death(t_data *data, t_philo *philos)
+int	check_death(t_data *data, t_philo *philos)
 {
 	int	i;
 
@@ -24,17 +24,15 @@ void	check_death(t_data *data, t_philo *philos)
 		if (philos[i].last_meal + data->time_to_die < get_time_ms())
 		{
 			log_philo(&philos[i], "died");
-			pthread_mutex_lock(&data->stop_mutex);
-			data->stop = 1;
-			pthread_mutex_unlock(&data->stop_mutex);
-			return ;
+			return (1);
 		}
 		i++;
 	}
 	pthread_mutex_unlock(&data->meals_mutex);
+	return (0);
 }
 
-void	check_meals(t_data *data, t_philo *philos)
+int	check_meals(t_data *data, t_philo *philos)
 {
 	int	i;
 
@@ -46,22 +44,25 @@ void	check_meals(t_data *data, t_philo *philos)
 		if (philos[i].meals_eaten < data->number_of_times_each_philo_must_eat)
 		{
 			pthread_mutex_unlock(&data->meals_mutex);
-			return ;
+			return (0);
 		}
 		i++;
 	}
 	pthread_mutex_unlock(&data->meals_mutex);
-	pthread_mutex_lock(&data->stop_mutex);
-	data->stop = 1;
-	pthread_mutex_unlock(&data->stop_mutex);
+	return (1);
 }
 
 void	monitoring(t_data *data, t_philo *philos)
 {
-	while (data->stop == 0)
+	while (1)
 	{
-		check_death(data, philos);
-		check_meals(data, philos);
-		usleep(5000);
+		if (check_death(data, philos))
+			break ;
+		if (check_meals(data, philos))
+			break ;
+		usleep(1000);
 	}
+	pthread_mutex_lock(&data->stop_mutex);
+	data->stop = 1;
+	pthread_mutex_unlock(&data->stop_mutex);
 }
