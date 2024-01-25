@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/25 22:32:46 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:43:26 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ int	init_all(const int argc, const char **argv, t_data *data)
 	data->philos = init_philos(data);
 	if (data->philos == NULL)
 		return (free(data->forks), FAILURE);
+	asign_forks(data);
     return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/25 22:30:29 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:40:08 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	philo->last_meal = get_time_ms();
+	log_philo(philo, "started");
 	while (1)
 	{
 		eat(philo);
