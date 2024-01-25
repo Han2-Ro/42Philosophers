@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/19 14:29:22 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:32:46 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	init_data(t_data *data, const int argc, const char *argv[])
 {
 	data->stop = 0;
-	data->number_of_philosophers = ft_atoi(argv[1]);
+	data->n_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
-	if (data->number_of_philosophers < 0 || data->time_to_die < 0
+	if (data->n_philos < 0 || data->time_to_die < 0
 		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
 	{
 		printf("Error: All arguments must positive integers.\n");
@@ -52,64 +52,75 @@ int	init_mutexes(t_data *data)
 	return (0);
 }
 
-t_philo	*init_philos(t_data *data, int *forks)
+t_philo	*init_philos(t_data *data)
 {
 	t_philo	*philos;
 	int		i;
 
-	philos = malloc(sizeof(t_philo) * data->number_of_philosophers);
+	philos = malloc(sizeof(t_philo) * data->n_philos);
 	if (!philos)
 		return (NULL);
 	i = 0;
-	while (i < data->number_of_philosophers - 1)
-	{
-		philos[i].forks[0] = &forks[i];
-		philos[i].forks[1] = &forks[i + 1];
-		i++;
-	}
-	philos[i].forks[0] = &forks[i];
-	philos[i].forks[1] = &forks[0];
-	i = 0;
-	while (i < data->number_of_philosophers)
+	while (i < data->n_philos)
 	{
 		philos[i].id = i + 1;
 		philos[i].data = data;
-		philos[i].last_meal = get_time_ms();
 		philos[i].meals_eaten = 0;
-		if (pthread_create(&philos[i].thread, NULL, &philo_routine, &philos[i]))
-			return (free(philos), NULL);
 		i++;
 	}
 	return (philos);
 }
 
-int	*init_forks(const t_data data)
+int	asign_forks(t_data *data)
 {
-	int	*forks;
 	int	i;
 
-	forks = malloc(sizeof(int) * data.number_of_philosophers);
+	i = 0;
+	while (i < data->n_philos)
+	{
+		if (i % 2 == 0)
+		{
+			data->philos[i].forks[0] = &data->forks[i];
+			data->philos[i].forks[1] = &data->forks[(i + 1) % data->n_philos];
+		}
+		else
+		{
+			data->philos[i].forks[0] = &data->forks[(i + 1) % data->n_philos];
+			data->philos[i].forks[1] = &data->forks[i];
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+pthread_mutex_t	*init_forks(const t_data data)
+{
+	pthread_mutex_t	*forks;
+	int				i;
+
+	forks = malloc(sizeof(pthread_mutex_t) * data.n_philos);
 	if (!forks)
 		return (NULL);
 	i = 0;
-	while (i < data.number_of_philosophers)
+	while (i < data.n_philos)
 	{
-		forks[i] = 0;
+		if (pthread_mutex_init(&forks[i], NULL) != 0)
+			return (free(forks), NULL);
 		i++;
 	}
 	return (forks);
 }
 
-int init_all(const int argc, const char **argv, t_data *data, t_philo **philos, int **forks)
+int	init_all(const int argc, const char **argv, t_data *data)
 {
 	if (init_data(data, argc, argv) == 1)
-		return (1);
+		return (FAILURE);
 	init_mutexes(data);
-	*forks = init_forks(*data);
-	if (*forks == NULL)
-		return (1);
-	*philos = init_philos(data, *forks);
-	if (*philos == NULL)
-		return (free(*forks), 1);
-    return (0);
+	data->forks = init_forks(*data);
+	if (data->forks == NULL)
+		return (FAILURE);
+	data->philos = init_philos(data);
+	if (data->philos == NULL)
+		return (free(data->forks), FAILURE);
+    return (SUCCESS);
 }

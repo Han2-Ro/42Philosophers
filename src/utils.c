@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/24 14:19:52 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:31:29 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	print_philos(t_philo *philos, const t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->number_of_philosophers)
+	while (i < data->n_philos)
 	{
 		printf("Philosopher %i, thread %li, meals_eaten %i\n", philos[i].id, philos[i].thread, philos[i].meals_eaten);
 		i++;
 	}
 }
 
-void	log_philo(t_philo *philo, char *msg)
+void	log_philo(const t_philo *philo, const char *msg)
 {
 	pthread_mutex_lock(&philo->data->log_mutex);
 	printf("%lu: %i %s\n", get_time_ms(), philo->id, msg);

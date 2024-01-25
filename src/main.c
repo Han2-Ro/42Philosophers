@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/24 14:22:49 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:29:56 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,37 @@ void	destroy_mutexes(t_data *data)
 	pthread_mutex_destroy(&data->meals_mutex);
 }
 
-void	join_philos(t_philo *philos, const t_data *data)
+void	join_philos(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->number_of_philosophers)
+	while (i < data->n_philos)
 	{
-		pthread_join(philos[i].thread, NULL);
+		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
+}
+
+int	start_simulation(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->n_philos)
+	{
+		if (
+			pthread_create(&data->philos[i].thread,
+				NULL,
+				&philo_routine,
+				&data->philos[i])
+			!= 0)
+		{
+			return (FAILURE);
+		}
+		i++;
+	}
+	return (SUCCESS);
 }
 
 //TODO: fix possible data races (done, but check again later)
@@ -40,8 +61,6 @@ void	join_philos(t_philo *philos, const t_data *data)
 int	main(const int argc, const char *argv[])
 {
 	t_data	data;
-	t_philo	*philos;
-	int		*forks;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -51,13 +70,13 @@ int	main(const int argc, const char *argv[])
 			);
 		return (1);
 	}
-	philos = NULL;
-	init_all(argc, argv, &data, &philos, &forks);
-	monitoring(&data, philos);
-	print_philos(philos, &data);
-	join_philos(philos, &data);
-	free(philos);
-	free(forks);
+	init_all(argc, argv, &data);
+	start_simulation(&data);
+	monitoring(&data);
+	print_philos(data.philos, &data);
+	join_philos(&data);
+	free(data.philos);
+	free(data.forks);
 	destroy_mutexes(&data);
 	return (0);
 }

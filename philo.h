@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/24 14:20:06 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:31:44 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-typedef struct s_data
+# define SUCCESS 0
+# define FAILURE 1
+
+typedef struct s_philo	t_philo;
+typedef struct s_data	t_data;
+
+struct s_data
 {
-	int				number_of_philosophers;
+	int				n_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
@@ -32,24 +38,26 @@ typedef struct s_data
 	pthread_mutex_t	log_mutex;
 	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	meals_mutex;
-}				t_data;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+};
 
-typedef struct s_philo
+struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				*forks[2];
+	pthread_mutex_t	*forks[2];
 	t_data			*data;
 	unsigned long	last_meal;
 	unsigned int	meals_eaten;
-}					t_philo;
+};
 
 int				ft_atoi(const char *str);
 unsigned long	get_time_ms(void);
-void			log_philo(t_philo *philo, char *msg);
+void			log_philo(const t_philo *philo, const char *msg);
 void			*philo_routine(void *arg);
 void			print_philos(t_philo *philos, const t_data *data);
-void			monitoring(t_data *data, t_philo *philos);
-int				init_all(const int argc, const char **argv, t_data *data, t_philo **philos, int **forks);
+void			monitoring(t_data *data);
+int				init_all(const int argc, const char **argv, t_data *data);
 
 #endif

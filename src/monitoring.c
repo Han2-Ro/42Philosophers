@@ -6,24 +6,25 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/24 14:13:50 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:31:09 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	check_death(t_data *data, t_philo *philos)
+int	check_death(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	//printf("locking meals_mutex: %p\n", &data->meals_mutex);
 	pthread_mutex_lock(&data->meals_mutex);
-	while (i < data->number_of_philosophers)
+	while (i < data->n_philos)
 	{
-		if (philos[i].last_meal + data->time_to_die < get_time_ms())
+		if (data->philos[i].last_meal + data->time_to_die < get_time_ms())
 		{
-			log_philo(&philos[i], "died");
+			log_philo(&data->philos[i], "died");
+			pthread_mutex_unlock(&data->meals_mutex);
 			return (1);
 		}
 		i++;
@@ -32,16 +33,16 @@ int	check_death(t_data *data, t_philo *philos)
 	return (0);
 }
 
-int	check_meals(t_data *data, t_philo *philos)
+int	check_meals(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	//printf("locking meals_mutex: %p\n", &data->meals_mutex);
 	pthread_mutex_lock(&data->meals_mutex);
-	while (i < data->number_of_philosophers)
+	while (i < data->n_philos)
 	{
-		if (philos[i].meals_eaten < data->number_of_times_each_philo_must_eat)
+		if (data->philos[i].meals_eaten < data->number_of_times_each_philo_must_eat)
 		{
 			pthread_mutex_unlock(&data->meals_mutex);
 			return (0);
@@ -52,13 +53,13 @@ int	check_meals(t_data *data, t_philo *philos)
 	return (1);
 }
 
-void	monitoring(t_data *data, t_philo *philos)
+void	monitoring(t_data *data)
 {
 	while (1)
 	{
-		if (check_death(data, philos))
+		if (check_death(data))
 			break ;
-		if (check_meals(data, philos))
+		if (check_meals(data))
 			break ;
 		usleep(200);
 	}
