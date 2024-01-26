@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/25 22:43:26 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/26 23:53:54 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_data(t_data *data, const int argc, const char *argv[])
 	if (argc == 6)
 	{
 		data->number_of_times_each_philo_must_eat = ft_atoi(argv[5]);
-		if (data->number_of_times_each_philo_must_eat < 0)
+		if (data->number_of_times_each_philo_must_eat < 1)
 		{
 			printf("Error: All arguments must positive integers.\n");
 			return (1);

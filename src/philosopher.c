@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/26 21:50:52 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/26 23:59:39 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,19 @@ void	sleeping(t_philo *philo)
 
 void	think(t_philo *philo)
 {
+	int	time_to_think;
+
 	log_philo(philo, "is thinking");
+	if (philo->data->n_philos % 2 == 0)
+	{
+		time_to_think = philo->data->time_to_eat * 0.5 - philo->data->time_to_sleep;
+	}
+	else
+	{
+		time_to_think = philo->data->time_to_eat * 1.5 - philo->data->time_to_sleep;
+	}
+	if (time_to_think > 0)
+		usleep(time_to_think * 1000);
 }
 
 void	*philo_routine(void *arg)
