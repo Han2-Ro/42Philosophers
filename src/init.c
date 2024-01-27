@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/26 23:53:54 by hannes           ###   ########.fr       */
+/*   Updated: 2024/01/27 12:18:36 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	init_data(t_data *data, const int argc, const char *argv[])
 
 int	init_mutexes(t_data *data)
 {
-	if (pthread_mutex_init(&data->fork_mutex, NULL))
-		return (1);
 	if (pthread_mutex_init(&data->log_mutex, NULL))
 		return (1);
 	if (pthread_mutex_init(&data->stop_mutex, NULL))

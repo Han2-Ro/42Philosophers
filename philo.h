@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/25 22:31:44 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 12:18:09 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ struct s_data
 	int				time_to_sleep;
 	unsigned int	number_of_times_each_philo_must_eat;
 	int				stop;
-	pthread_mutex_t	fork_mutex;
 	pthread_mutex_t	log_mutex;
 	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	meals_mutex;

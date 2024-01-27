@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/25 22:41:17 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 12:18:22 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	destroy_mutexes(t_data *data)
 {
-	pthread_mutex_destroy(&data->fork_mutex);
 	pthread_mutex_destroy(&data->log_mutex);
 	pthread_mutex_destroy(&data->stop_mutex);
 	pthread_mutex_destroy(&data->meals_mutex);
@@ -55,6 +54,8 @@ int	start_simulation(t_data *data)
 
 //TODO: fix possible data races (done, but check again later)
 //TODO: exit immediately on exit condition (improved, but not perfect)
+//TODO: figure out how to properly start the simulation
+//TODO: go over argument checks
 //TODO: one mutex per fork
 //TODO: refactor code to shorter functions
 //TODO: norminette
@@ -72,7 +73,7 @@ int	main(const int argc, const char *argv[])
 	}
 	init_all(argc, argv, &data);
 	start_simulation(&data);
-	usleep(500);
+	usleep(5000);
 	monitoring(&data);
 	print_philos(data.philos, &data);
 	join_philos(&data);

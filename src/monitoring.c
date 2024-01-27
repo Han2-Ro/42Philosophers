@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/25 22:31:09 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 12:07:10 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	check_death(t_data *data)
 	{
 		if (data->philos[i].last_meal + data->time_to_die < get_time_ms())
 		{
-			log_philo(&data->philos[i], "died");
 			pthread_mutex_unlock(&data->meals_mutex);
+			log_philo(&data->philos[i], "died");
 			return (1);
 		}
 		i++;
@@ -50,6 +50,7 @@ int	check_meals(t_data *data)
 		i++;
 	}
 	pthread_mutex_unlock(&data->meals_mutex);
+	log_philo(&data->philos[i], "all meals eaten");
 	return (1);
 }
 
