@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 13:19:48 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 15:04:31 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,20 @@ void	print_philos(t_data *data)
 	pthread_mutex_lock(&data->log_mutex);
 	while (i < data->n_philos)
 	{
-		printf("Philosopher %i, thread %li, meals_eaten %i\n",
+		printf("Philosopher %i, meals_eaten %i, last_meal:%li\n",
 			data->philos[i].id,
-			data->philos[i].thread,
-			data->philos[i].meals_eaten);
+			data->philos[i].meals_eaten,
+			data->philos[i].last_meal);
 		i++;
 	}
 	pthread_mutex_unlock(&data->log_mutex);
 }
 
-void	log_philo(const t_philo *philo, const char *msg)
+void	log_philo(t_philo *philo, const char *msg)
 {
 	if (check_stop(philo))
 		return ;
 	pthread_mutex_lock(&philo->data->log_mutex);
-	printf("%lu: %i %s\n", get_time_ms(), philo->id, msg);
+	printf("%lu %i %s\n", get_time_ms(), philo->id, msg);
 	pthread_mutex_unlock(&philo->data->log_mutex);
 }

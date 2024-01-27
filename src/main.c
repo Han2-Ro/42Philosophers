@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 13:15:08 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 15:00:14 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	main(const int argc, const char *argv[])
 			);
 		return (1);
 	}
-	init_all(argc, argv, &data);
+	if (init_all(argc, argv, &data) == FAILURE)
+		return (1);
 	start_simulation(&data);
 	usleep(1000);
 	monitoring(&data);
