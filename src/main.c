@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 13:12:10 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 13:15:08 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	start_simulation(t_data *data)
 
 //TODO: fix possible data races (done, but check again later)
 //TODO: exit immediately on exit condition (improved, but not perfect)
-//TODO: figure out how to properly start the simulation
+//TODO: figure out how to properly start the simulation(done)
 //TODO: go over argument checks
 //TODO: one mutex per fork
 //TODO: refactor code to shorter functions
