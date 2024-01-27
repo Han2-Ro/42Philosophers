@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 12:28:53 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 13:07:03 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	eat(t_philo *philo)
 	}*/
 	pthread_mutex_lock(philo->forks[0]);
 	log_philo(philo, "has taken a fork");
-	printf("forks[0]: %p\n", philo->forks[0]);
+	//printf("forks[0]: %p\n", philo->forks[0]);
 	if (philo->forks[0] == philo->forks[1])
 	{
 		pthread_mutex_lock(&philo->data->stop_mutex);
@@ -65,7 +65,7 @@ void	eat(t_philo *philo)
 	}
 	pthread_mutex_lock(philo->forks[1]);
 	log_philo(philo, "has taken a fork");
-	printf("forks[1]: %p\n", philo->forks[1]);
+	//printf("forks[1]: %p\n", philo->forks[1]);
 	if (check_stop(philo) == 1)
 	{
 		pthread_mutex_unlock(philo->forks[0]);

@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/26 21:51:14 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 13:11:11 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,21 @@ unsigned long	get_time_ms(void)
 	return (time_ms);
 }
 
-void	print_philos(t_philo *philos, const t_data *data)
+void	print_philos(t_data *data)
 {
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&data->log_mutex);
 	while (i < data->n_philos)
 	{
-		printf("Philosopher %i, thread %li, meals_eaten %i\n", philos[i].id, philos[i].thread, philos[i].meals_eaten);
+		printf("Philosopher %i, thread %li, meals_eaten %i\n",
+		data->philos[i].id,
+		data->philos[i].thread,
+		data->philos[i].meals_eaten);
 		i++;
 	}
+	pthread_mutex_unlock(&data->log_mutex);
 }
 
 void	log_philo(const t_philo *philo, const char *msg)
