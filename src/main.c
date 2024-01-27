@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 12:42:03 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 12:45:12 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(const int argc, const char *argv[])
 	}
 	init_all(argc, argv, &data);
 	start_simulation(&data);
-	usleep(5000);
+	usleep(1000);
 	monitoring(&data);
 	print_philos(data.philos, &data);
 	join_philos(&data);
