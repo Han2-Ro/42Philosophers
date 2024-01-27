@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 12:18:22 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 12:42:03 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ int	start_simulation(t_data *data)
 {
 	int	i;
 
+	data->start_time = get_time_ms();
 	i = 0;
 	while (i < data->n_philos)
 	{
+		data->philos[i].last_meal = data->start_time;
 		if (
 			pthread_create(&data->philos[i].thread,
 				NULL,

@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/27 12:18:36 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/27 12:37:49 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,20 @@ int	init_mutexes(t_data *data)
 
 t_philo	*init_philos(t_data *data)
 {
-	t_philo	*philos;
 	int		i;
 
-	philos = malloc(sizeof(t_philo) * data->n_philos);
-	if (!philos)
+	data->philos = malloc(sizeof(t_philo) * data->n_philos);
+	if (!data->philos)
 		return (NULL);
 	i = 0;
 	while (i < data->n_philos)
 	{
-		philos[i].id = i + 1;
-		philos[i].data = data;
-		philos[i].meals_eaten = 0;
+		data->philos[i].id = i + 1;
+		data->philos[i].data = data;
+		data->philos[i].meals_eaten = 0;
 		i++;
 	}
-	return (philos);
+	return (data->philos);
 }
 
 int	asign_forks(t_data *data)
@@ -117,8 +116,7 @@ int	init_all(const int argc, const char **argv, t_data *data)
 	data->forks = init_forks(*data);
 	if (data->forks == NULL)
 		return (FAILURE);
-	data->philos = init_philos(data);
-	if (data->philos == NULL)
+	if (init_philos(data) == NULL)
 		return (free(data->forks), FAILURE);
 	asign_forks(data);
     return (SUCCESS);
