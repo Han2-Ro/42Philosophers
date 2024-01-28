@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/28 20:57:46 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 21:59:42 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_data(t_data *data, const int argc, const char *argv[])
 	if (argc == 6)
 		data->eat_n_times = ft_atoi(argv[5]);
 	else
-		data->eat_n_times = 2147483647; //TODO: reconsider using max int
+		data->eat_n_times = UINT_MAX;
 	if (data->n_philos < 1 || data->time_die < 1
 		|| data->time_eat < 1 || data->time_sleep < 1
 		|| data->eat_n_times < 1)
@@ -112,5 +112,5 @@ int	init_all(const int argc, const char **argv, t_data *data)
 	if (init_philos(data) == FAILURE)
 		return (free(data->forks), FAILURE);
 	asign_forks(data);
-    return (SUCCESS);
+	return (SUCCESS);
 }
