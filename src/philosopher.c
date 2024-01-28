@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 15:05:06 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:03:23 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,12 @@ int	take_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	/*while (take_forks(philo) == 0)
-	{
-		if (check_stop(philo) == 1)
-			return ;
-		usleep(500);
-	}*/
 	pthread_mutex_lock(philo->forks[0]);
 	log_philo(philo, "has taken a fork");
 	//printf("forks[0]: %p\n", philo->forks[0]);
 	if (philo->forks[0] == philo->forks[1])
 	{
-		pthread_mutex_lock(&philo->data->stop_mutex);
-		philo->data->stop = 1;
-		pthread_mutex_unlock(&philo->data->stop_mutex);
-		pthread_mutex_unlock(philo->forks[0]);
+		usleep(philo->data->time_die * 1000 + 1000);
 		return ;
 	}
 	pthread_mutex_lock(philo->forks[1]);
@@ -77,7 +68,7 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_time_ms();
 	philo->meals_eaten++; //TODO: consider moving this after the sleep
 	pthread_mutex_unlock(&philo->data->meals_mutex);
-	usleep(philo->data->time_to_eat * 1000);
+	usleep(philo->data->time_eat * 1000);
 	pthread_mutex_unlock(philo->forks[0]);
 	pthread_mutex_unlock(philo->forks[1]);
 }
@@ -85,7 +76,7 @@ void	eat(t_philo *philo)
 void	sleeping(t_philo *philo)
 {
 	log_philo(philo, "is sleeping");
-	usleep(philo->data->time_to_sleep * 1000);
+	usleep(philo->data->time_sleep * 1000);
 }
 
 void	think(t_philo *philo)
@@ -95,11 +86,11 @@ void	think(t_philo *philo)
 	log_philo(philo, "is thinking");
 	if (philo->data->n_philos % 2 == 0)
 	{
-		time_to_think = philo->data->time_to_eat * 0.5 - philo->data->time_to_sleep;
+		time_to_think = philo->data->time_eat * 0.5 - philo->data->time_sleep;
 	}
 	else
 	{
-		time_to_think = philo->data->time_to_eat * 1.5 - philo->data->time_to_sleep;
+		time_to_think = philo->data->time_eat * 1.5 - philo->data->time_sleep;
 	}
 	if (time_to_think > 0)
 		usleep(time_to_think * 1000);
@@ -110,6 +101,8 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		usleep(philo->data->time_eat * 1000 / 2);
 	//log_philo(philo, "started");
 	while (1)
 	{

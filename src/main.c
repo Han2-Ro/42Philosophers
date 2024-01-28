@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 15:00:14 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 19:55:38 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	main(const int argc, const char *argv[])
 	if (argc != 5 && argc != 6)
 	{
 		printf(
-			"usage: ./philo number_of_philosophers time_to_die time_to_eat \
-			time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
+			"usage: ./philo number_of_philosophers time_to_die time_to_eat "
+			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 			);
 		return (1);
 	}
@@ -78,7 +78,7 @@ int	main(const int argc, const char *argv[])
 	start_simulation(&data);
 	usleep(1000);
 	monitoring(&data);
-	print_philos(&data);
+	//print_philos(&data);
 	join_philos(&data);
 	free(data.philos);
 	free(data.forks);

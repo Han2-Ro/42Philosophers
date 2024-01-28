@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 13:56:22 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 19:45:52 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ typedef struct s_data	t_data;
 struct s_data
 {
 	int				n_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				time_think;
 	unsigned int	number_of_times_each_philo_must_eat;
 	int				stop;
 	unsigned long	start_time;

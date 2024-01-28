@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/27 16:04:51 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 19:44:54 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ int	check_death(t_data *data)
 	int	i;
 
 	i = 0;
-	//printf("locking meals_mutex: %p\n", &data->meals_mutex);
 	pthread_mutex_lock(&data->meals_mutex);
 	while (i < data->n_philos)
 	{
-		if (data->philos[i].last_meal + data->time_to_die < get_time_ms())
+		if (data->philos[i].last_meal + data->time_die < get_time_ms())
 		{
 			pthread_mutex_unlock(&data->meals_mutex);
 			log_philo(&data->philos[i], "died");
@@ -50,7 +49,7 @@ int	check_meals(t_data *data)
 		i++;
 	}
 	pthread_mutex_unlock(&data->meals_mutex);
-	log_philo(&data->philos[0], "all meals eaten");
+	//log_philo(&data->philos[0], "all meals eaten");
 	return (1);
 }
 

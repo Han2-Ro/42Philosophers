@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/27 14:08:58 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 19:45:18 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	init_data(t_data *data, const int argc, const char *argv[])
 {
 	data->stop = 0;
 	data->n_philos = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (data->n_philos < 0 || data->time_to_die < 0
-		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
+	data->time_die = ft_atoi(argv[2]);
+	data->time_eat = ft_atoi(argv[3]);
+	data->time_sleep = ft_atoi(argv[4]);
+	if (data->n_philos < 0 || data->time_die < 0
+		|| data->time_eat < 0 || data->time_sleep < 0)
 	{
 		printf("Error: All arguments must positive integers.\n");
 		return (FAILURE);
