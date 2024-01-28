@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 20:03:23 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:50:53 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,10 @@ int	check_stop(t_philo *philo)
 	return (ret);
 }
 
-/*
-int	take_forks(t_philo *philo)
-{
-	int	ret;
-
-	ret = 0;
-	pthread_mutex_lock(&philo->data->fork_mutex);
-	//printf("%llu: %i tries to take forks\n", get_time_ms(), philo->id);
-	if (*philo->forks[0] == 0 && *philo->forks[1] == 0 && check_stop(philo) == 0)
-	{
-		*philo->forks[0] = 1;
-		log_philo(philo, "has taken a fork");
-		*philo->forks[1] = 1;
-		log_philo(philo, "has taken a fork");
-		ret = 1;
-	}
-	pthread_mutex_unlock(&philo->data->fork_mutex);
-	return (ret);
-}
-*/
-
-void	eat(t_philo *philo)
+void	take_forks(t_philo *philo) //TODO: protect mutex_locks
 {
 	pthread_mutex_lock(philo->forks[0]);
 	log_philo(philo, "has taken a fork");
-	//printf("forks[0]: %p\n", philo->forks[0]);
 	if (philo->forks[0] == philo->forks[1])
 	{
 		usleep(philo->data->time_die * 1000 + 1000);
@@ -56,7 +34,10 @@ void	eat(t_philo *philo)
 	}
 	pthread_mutex_lock(philo->forks[1]);
 	log_philo(philo, "has taken a fork");
-	//printf("forks[1]: %p\n", philo->forks[1]);
+}
+
+void	eat(t_philo *philo)
+{
 	if (check_stop(philo) == 1)
 	{
 		pthread_mutex_unlock(philo->forks[0]);

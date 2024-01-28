@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 19:55:38 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:31:19 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	destroy_mutexes(t_data *data)
 
 void	join_philos(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < data->n_philos)
@@ -33,7 +33,7 @@ void	join_philos(t_data *data)
 
 int	start_simulation(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	data->start_time = get_time_ms();
 	i = 0;

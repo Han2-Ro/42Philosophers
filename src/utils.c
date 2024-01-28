@@ -6,23 +6,23 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/27 15:04:31 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:52:28 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	ft_atoi(const char *str)
+unsigned int	ft_atoi(const char *str)
 {
-	int	i;
-	int	res;
+	unsigned int	i;
+	unsigned int	res;
 
 	i = 0;
 	res = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (-1);
+			return (0);
 		res = res * 10 + str[i] - '0';
 		i++;
 	}
@@ -41,7 +41,7 @@ unsigned long	get_time_ms(void)
 
 void	print_philos(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	pthread_mutex_lock(&data->log_mutex);

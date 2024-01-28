@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 19:45:52 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:57:46 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ typedef struct s_data	t_data;
 
 struct s_data
 {
-	int				n_philos;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	int				time_think;
-	unsigned int	number_of_times_each_philo_must_eat;
+	unsigned int	n_philos;
+	unsigned int	time_die;
+	unsigned int	time_eat;
+	unsigned int	time_sleep;
+	unsigned int	eat_n_times;
 	int				stop;
 	unsigned long	start_time;
 	pthread_mutex_t	log_mutex;
@@ -53,7 +52,7 @@ struct s_philo
 	unsigned int	meals_eaten;
 };
 
-int				ft_atoi(const char *str);
+unsigned int	ft_atoi(const char *str);
 unsigned long	get_time_ms(void);
 void			log_philo(t_philo *philo, const char *msg);
 int				check_stop(t_philo *philo);
