@@ -6,22 +6,11 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 20:50:53 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 21:02:54 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-int	check_stop(t_philo *philo)
-{
-	int	ret;
-
-	pthread_mutex_lock(&philo->data->stop_mutex);
-	ret = philo->data->stop;
-	//printf("%i stop: %i\n", philo->id, ret);
-	pthread_mutex_unlock(&philo->data->stop_mutex);
-	return (ret);
-}
 
 void	take_forks(t_philo *philo) //TODO: protect mutex_locks
 {
@@ -38,6 +27,7 @@ void	take_forks(t_philo *philo) //TODO: protect mutex_locks
 
 void	eat(t_philo *philo)
 {
+	take_forks(philo);
 	if (check_stop(philo) == 1)
 	{
 		pthread_mutex_unlock(philo->forks[0]);
@@ -47,9 +37,11 @@ void	eat(t_philo *philo)
 	log_philo(philo, "is eating");
 	pthread_mutex_lock(&philo->data->meals_mutex);
 	philo->last_meal = get_time_ms();
-	philo->meals_eaten++; //TODO: consider moving this after the sleep
 	pthread_mutex_unlock(&philo->data->meals_mutex);
 	usleep(philo->data->time_eat * 1000);
+	pthread_mutex_lock(&philo->data->meals_mutex);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->data->meals_mutex);
 	pthread_mutex_unlock(philo->forks[0]);
 	pthread_mutex_unlock(philo->forks[1]);
 }

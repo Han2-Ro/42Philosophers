@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/28 20:58:07 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 21:14:33 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	monitoring(t_data *data)
 			break ;
 		if (check_meals(data))
 			break ;
-		usleep(200);
+		usleep(2000);
 	}
 	pthread_mutex_lock(&data->stop_mutex);
 	data->stop = 1;

@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 20:31:19 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 21:00:05 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	start_simulation(t_data *data)
 //TODO: exit immediately on exit condition (improved, but not perfect)
 //TODO: figure out how to properly start the simulation(done)
 //TODO: go over argument checks
-//TODO: one mutex per fork
 //TODO: refactor code to shorter functions
 //TODO: norminette
 int	main(const int argc, const char *argv[])
