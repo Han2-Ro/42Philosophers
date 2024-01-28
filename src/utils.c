@@ -6,28 +6,11 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 21:24:23 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 22:16:39 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-unsigned int	ft_atoi(const char *str)
-{
-	unsigned int	i;
-	unsigned int	res;
-
-	i = 0;
-	res = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	return (res);
-}
 
 unsigned long	get_time_ms(void)
 {

@@ -6,32 +6,11 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:15:36 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/28 21:59:42 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/28 22:18:21 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-int	init_data(t_data *data, const int argc, const char *argv[])
-{
-	data->stop = 0;
-	data->n_philos = ft_atoi(argv[1]);
-	data->time_die = ft_atoi(argv[2]);
-	data->time_eat = ft_atoi(argv[3]);
-	data->time_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->eat_n_times = ft_atoi(argv[5]);
-	else
-		data->eat_n_times = UINT_MAX;
-	if (data->n_philos < 1 || data->time_die < 1
-		|| data->time_eat < 1 || data->time_sleep < 1
-		|| data->eat_n_times < 1)
-	{
-		printf("Error: All arguments must integers > 0.\n");
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
 
 int	init_mutexes(t_data *data)
 {
@@ -103,7 +82,7 @@ int	init_forks(t_data *data)
 
 int	init_all(const int argc, const char **argv, t_data *data)
 {
-	if (init_data(data, argc, argv) == 1)
+	if (parse_data(data, argc, argv) == 1)
 		return (FAILURE);
 	if (init_mutexes(data) == FAILURE)
 		return (FAILURE);
