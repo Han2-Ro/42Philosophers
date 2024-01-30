@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/28 22:13:26 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/30 15:40:03 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_meals(t_data *data)
 		i++;
 	}
 	pthread_mutex_unlock(&data->meals_mutex);
-	//log_philo(&data->philos[0], "all meals eaten");
+	// log_philo(&data->philos[0], "all meals eaten");
 	return (1);
 }
 
@@ -65,4 +65,6 @@ void	monitoring(t_data *data)
 	pthread_mutex_lock(&data->stop_mutex);
 	data->stop = 1;
 	pthread_mutex_unlock(&data->stop_mutex);
+	usleep(1000);
+	printf("Simulation ended\n");
 }

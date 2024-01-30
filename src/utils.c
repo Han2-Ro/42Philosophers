@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/30 13:32:30 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/30 15:47:46 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,13 @@ void	log_philo(t_philo *philo, const char *msg)
 {
 	unsigned long	timestamp;
 
-	if (check_stop(philo))
-		return ;
-	timestamp = get_time_ms() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->log_mutex);
+	if (check_stop(philo))
+	{
+		msg = "<ended>";
+		// return ;
+	}
+	timestamp = get_time_ms() - philo->data->start_time;
 	printf("%05lu\t%i %s\n", timestamp, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->log_mutex);
 }
