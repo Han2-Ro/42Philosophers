@@ -6,13 +6,13 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 21:02:54 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:30:34 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	take_forks(t_philo *philo) //TODO: protect mutex_locks
+void	take_forks(t_philo *philo) // TODO: protect mutex_locks
 {
 	pthread_mutex_lock(philo->forks[0]);
 	log_philo(philo, "has taken a fork");
@@ -76,7 +76,7 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep(philo->data->time_eat * 1000 / 2);
-	//log_philo(philo, "started");
+	// log_philo(philo, "started");
 	while (1)
 	{
 		eat(philo);

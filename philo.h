@@ -6,20 +6,20 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 22:18:21 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:24:13 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <stdio.h>
-# include <unistd.h>
 # include <sys/time.h>
-# include <pthread.h>
-# include <limits.h>
+# include <unistd.h>
 
 # define SUCCESS 0
 # define FAILURE 1

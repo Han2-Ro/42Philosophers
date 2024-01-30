@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/28 22:16:39 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/30 13:32:30 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,30 @@ unsigned long	get_time_ms(void)
 	gettimeofday(&time, NULL);
 	time_ms = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	return (time_ms);
+}
+
+unsigned long	get_time_us(void)
+{
+	struct timeval	time;
+	unsigned long	time_ms;
+
+	gettimeofday(&time, NULL);
+	time_ms = ((time.tv_sec * 1000000) + (time.tv_usec));
+	return (time_ms);
+}
+
+int	ft_usleep(int us)
+{
+	unsigned long	start;
+	unsigned long	end;
+
+	start = get_time_us();
+	end = start + us;
+	while (get_time_us() + 10000 < end)
+		usleep((end - get_time_us()) / 2);
+	while (get_time_us() < end)
+		;
+	return (0);
 }
 
 int	check_stop(t_philo *philo)
@@ -41,8 +65,7 @@ void	print_philos(t_data *data)
 	while (i < data->n_philos)
 	{
 		printf("Philosopher %i, meals_eaten %i, last_meal:%li\n",
-			data->philos[i].id,
-			data->philos[i].meals_eaten,
+			data->philos[i].id, data->philos[i].meals_eaten,
 			data->philos[i].last_meal);
 		i++;
 	}
