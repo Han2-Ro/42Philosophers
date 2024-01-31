@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 22:16:29 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/31 19:28:20 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 21:39:51 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ unsigned int	ft_atoi(const char *str)
 {
 	unsigned int	i;
 	unsigned int	res;
+	unsigned int	new_res;
 
 	i = 0;
 	res = 0;
@@ -23,7 +24,10 @@ unsigned int	ft_atoi(const char *str)
 	{
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
-		res = res * 10 + str[i] - '0';
+		new_res = res * 10 + str[i] - '0';
+		if (new_res < res)
+			return (0);
+		res = new_res;
 		i++;
 	}
 	return (res);
