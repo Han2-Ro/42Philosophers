@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/31 20:07:27 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:38:15 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	start_simulation(t_data *data)
 		{
 			return (FAILURE);
 		}
-		log_philo(&data->philos[i], "starting", false);
 		i++;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/31 19:50:15 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:37:52 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	take_forks(t_philo *philo) // TODO: protect mutex_locks
 {
-	log_philo(philo, "taking forks", false);
 	pthread_mutex_lock(philo->forks[0]);
 	log_philo(philo, "has taken a fork", false);
 	if (philo->forks[0] == philo->forks[1])
@@ -77,8 +76,7 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep(philo->data->time_eat * 1000 / 2);
-	log_philo(philo, "started", true);
-	printf("stop: %i\n", check_stop(philo));
+	// log_philo(philo, "started", true);
 	while (1)
 	{
 		eat(philo);

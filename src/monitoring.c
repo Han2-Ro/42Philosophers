@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/31 19:55:07 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:15:57 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,4 @@ void	monitoring(t_data *data)
 			break ;
 		usleep(500);
 	}
-	usleep(500);
-	printf("Simulation ended\n");
 }
