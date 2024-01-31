@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/31 20:15:57 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:59:52 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	check_meals(t_data *data)
 	}
 	set_stop(data);
 	pthread_mutex_unlock(&data->meals_mutex);
-	// log_philo(&data->philos[0], "all meals eaten");
 	return (1);
 }
 

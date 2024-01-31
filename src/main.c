@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/31 20:38:15 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 21:00:31 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ int	start_simulation(t_data *data)
 	return (SUCCESS);
 }
 
-// TODO: fix possible data races (done, but check again later)
-// TODO: exit immediately on exit condition (done, but maybe more testing)
-// TODO: go over argument checks
-// TODO: refactor code to shorter functions
-// TODO: norminette
 int	main(const int argc, const char *argv[])
 {
 	t_data	data;
@@ -70,7 +65,6 @@ int	main(const int argc, const char *argv[])
 	start_simulation(&data);
 	usleep(1000);
 	monitoring(&data);
-	// print_philos(&data);
 	join_philos(&data);
 	free(data.philos);
 	free(data.forks);

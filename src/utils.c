@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/31 20:12:46 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:59:14 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,6 @@ unsigned long	get_time_ms(void)
 	return (time_ms);
 }
 
-unsigned long	get_time_us(void)
-{
-	struct timeval	time;
-	unsigned long	time_ms;
-
-	gettimeofday(&time, NULL);
-	time_ms = ((time.tv_sec * 1000000) + (time.tv_usec));
-	return (time_ms);
-}
-
-int	ft_usleep(int us)
-{
-	unsigned long	start;
-	unsigned long	end;
-
-	start = get_time_us();
-	end = start + us;
-	while (get_time_us() + 10000 < end)
-		usleep((end - get_time_us()) / 2);
-	while (get_time_us() < end)
-		;
-	return (0);
-}
-
 bool	check_stop(t_philo *philo)
 {
 	int	ret;
@@ -56,22 +32,6 @@ bool	check_stop(t_philo *philo)
 	return (ret);
 }
 
-void	print_philos(t_data *data)
-{
-	unsigned int	i;
-
-	i = 0;
-	pthread_mutex_lock(&data->log_mutex);
-	while (i < data->n_philos)
-	{
-		printf("Philosopher %i, meals_eaten %i, last_meal:%li\n",
-			data->philos[i].id, data->philos[i].meals_eaten,
-			data->philos[i].last_meal);
-		i++;
-	}
-	pthread_mutex_unlock(&data->log_mutex);
-}
-
 void	log_philo(t_philo *philo, const char *msg, bool print_always)
 {
 	unsigned long	timestamp;
@@ -79,7 +39,6 @@ void	log_philo(t_philo *philo, const char *msg, bool print_always)
 	pthread_mutex_lock(&philo->data->log_mutex);
 	if (!print_always && check_stop(philo))
 	{
-		// printf("<supressed>: ");
 		pthread_mutex_unlock(&philo->data->log_mutex);
 		return ;
 	}
