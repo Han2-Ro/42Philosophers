@@ -6,11 +6,19 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/30 15:40:03 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 19:55:07 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+int	set_stop(t_data *data)
+{
+	pthread_mutex_lock(&data->stop_mutex);
+	data->stop = true;
+	pthread_mutex_unlock(&data->stop_mutex);
+	return (SUCCESS);
+}
 
 int	check_death(t_data *data)
 {
@@ -23,7 +31,8 @@ int	check_death(t_data *data)
 		if (data->philos[i].last_meal + data->time_die < get_time_ms())
 		{
 			pthread_mutex_unlock(&data->meals_mutex);
-			log_philo(&data->philos[i], "died");
+			set_stop(data);
+			log_philo(&data->philos[i], "died", true);
 			return (1);
 		}
 		i++;
@@ -47,6 +56,7 @@ int	check_meals(t_data *data)
 		}
 		i++;
 	}
+	set_stop(data);
 	pthread_mutex_unlock(&data->meals_mutex);
 	// log_philo(&data->philos[0], "all meals eaten");
 	return (1);
@@ -62,9 +72,6 @@ void	monitoring(t_data *data)
 			break ;
 		usleep(500);
 	}
-	pthread_mutex_lock(&data->stop_mutex);
-	data->stop = 1;
-	pthread_mutex_unlock(&data->stop_mutex);
-	usleep(1000);
+	usleep(500);
 	printf("Simulation ended\n");
 }

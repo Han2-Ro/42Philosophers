@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 14:10:18 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/30 13:39:01 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:07:27 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,30 @@ int	start_simulation(t_data *data)
 	while (i < data->n_philos)
 	{
 		data->philos[i].last_meal = data->start_time;
-		if (
-			pthread_create(&data->philos[i].thread,
-				NULL,
-				&philo_routine,
-				&data->philos[i])
-			!= 0)
+		if (pthread_create(&data->philos[i].thread, NULL, &philo_routine,
+				&data->philos[i]) != 0)
 		{
 			return (FAILURE);
 		}
+		log_philo(&data->philos[i], "starting", false);
 		i++;
 	}
 	return (SUCCESS);
 }
 
-//TODO: fix possible data races (done, but check again later)
-//TODO: exit immediately on exit condition (improved, but not perfect)
-//TODO: figure out how to properly start the simulation(done)
-//TODO: go over argument checks
-//TODO: refactor code to shorter functions
-//TODO: norminette
+// TODO: fix possible data races (done, but check again later)
+// TODO: exit immediately on exit condition (done, but maybe more testing)
+// TODO: go over argument checks
+// TODO: refactor code to shorter functions
+// TODO: norminette
 int	main(const int argc, const char *argv[])
 {
 	t_data	data;
 
 	if (argc != 5 && argc != 6)
 	{
-		printf(
-			"usage: ./philo number_of_philosophers time_to_die time_to_eat "
-			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
-			);
+		printf("usage: ./philo number_of_philosophers time_to_die time_to_eat "
+			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
 	if (init_all(argc, argv, &data) == FAILURE)
@@ -77,7 +71,7 @@ int	main(const int argc, const char *argv[])
 	start_simulation(&data);
 	usleep(1000);
 	monitoring(&data);
-	//print_philos(&data);
+	// print_philos(&data);
 	join_philos(&data);
 	free(data.philos);
 	free(data.forks);

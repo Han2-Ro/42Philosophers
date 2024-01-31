@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/30 15:38:23 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 19:50:15 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 void	take_forks(t_philo *philo) // TODO: protect mutex_locks
 {
+	log_philo(philo, "taking forks", false);
 	pthread_mutex_lock(philo->forks[0]);
-	log_philo(philo, "has taken a fork");
+	log_philo(philo, "has taken a fork", false);
 	if (philo->forks[0] == philo->forks[1])
 	{
 		usleep(philo->data->time_die * 1000 + 1000);
 		return ;
 	}
 	pthread_mutex_lock(philo->forks[1]);
-	log_philo(philo, "has taken a fork");
+	log_philo(philo, "has taken a fork", false);
 }
 
 void	eat(t_philo *philo)
@@ -34,7 +35,7 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(philo->forks[1]);
 		return ;
 	}
-	log_philo(philo, "is eating");
+	log_philo(philo, "is eating", false);
 	pthread_mutex_lock(&philo->data->meals_mutex);
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->data->meals_mutex);
@@ -48,7 +49,7 @@ void	eat(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-	log_philo(philo, "is sleeping");
+	log_philo(philo, "is sleeping", false);
 	usleep(philo->data->time_sleep * 1000);
 }
 
@@ -56,7 +57,7 @@ void	think(t_philo *philo)
 {
 	int	time_to_think;
 
-	log_philo(philo, "is thinking");
+	log_philo(philo, "is thinking", false);
 	if (philo->data->n_philos % 2 == 0)
 	{
 		time_to_think = philo->data->time_eat * 0.5 - philo->data->time_sleep;
@@ -76,7 +77,8 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep(philo->data->time_eat * 1000 / 2);
-	// log_philo(philo, "started");
+	log_philo(philo, "started", true);
+	printf("stop: %i\n", check_stop(philo));
 	while (1)
 	{
 		eat(philo);

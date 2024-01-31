@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:57:38 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/30 15:47:46 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 19:53:29 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_usleep(int us)
 	return (0);
 }
 
-int	check_stop(t_philo *philo)
+bool	check_stop(t_philo *philo)
 {
 	int	ret;
 
@@ -72,14 +72,15 @@ void	print_philos(t_data *data)
 	pthread_mutex_unlock(&data->log_mutex);
 }
 
-void	log_philo(t_philo *philo, const char *msg)
+void	log_philo(t_philo *philo, const char *msg, bool print_always)
 {
 	unsigned long	timestamp;
 
 	pthread_mutex_lock(&philo->data->log_mutex);
-	if (check_stop(philo))
+	if (!print_always && check_stop(philo))
 	{
-		msg = "<ended>";
+		printf("<supressed>: ");
+		// pthread_mutex_unlock(&philo->data->log_mutex);
 		// return ;
 	}
 	timestamp = get_time_ms() - philo->data->start_time;

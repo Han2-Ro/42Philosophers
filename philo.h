@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:25:41 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/30 15:21:23 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 19:29:25 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <limits.h>
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -34,7 +35,7 @@ struct					s_data
 	unsigned int		time_eat;
 	unsigned int		time_sleep;
 	unsigned int		eat_n_times;
-	int					stop;
+	bool				stop;
 	unsigned long		start_time;
 	pthread_mutex_t		log_mutex;
 	pthread_mutex_t		stop_mutex;
@@ -55,8 +56,9 @@ struct					s_philo
 
 unsigned long			get_time_ms(void);
 int						ft_usleep(int us);
-void					log_philo(t_philo *philo, const char *msg);
-int						check_stop(t_philo *philo);
+void					log_philo(t_philo *philo, const char *msg,
+							bool print_always);
+bool					check_stop(t_philo *philo);
 void					*philo_routine(void *arg);
 void					print_philos(t_data *data);
 void					monitoring(t_data *data);
