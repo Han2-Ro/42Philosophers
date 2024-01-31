@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 17:08:00 by hannes            #+#    #+#             */
-/*   Updated: 2024/01/31 20:57:06 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 21:29:04 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	think(t_philo *philo)
 	log_philo(philo, "is thinking", false);
 	if (philo->data->n_philos % 2 == 0)
 	{
-		time_to_think = philo->data->time_eat * 0.5 - philo->data->time_sleep;
+		time_to_think = philo->data->time_eat - philo->data->time_sleep;
 	}
 	else
 	{
-		time_to_think = philo->data->time_eat * 1.5 - philo->data->time_sleep;
+		time_to_think = philo->data->time_eat * 2 - philo->data->time_sleep;
 	}
 	if (time_to_think > 0)
 		usleep(time_to_think * 1000);

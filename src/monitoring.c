@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:18:39 by hrother           #+#    #+#             */
-/*   Updated: 2024/01/31 20:59:52 by hrother          ###   ########.fr       */
+/*   Updated: 2024/01/31 21:21:03 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	monitoring(t_data *data)
 			break ;
 		if (check_meals(data))
 			break ;
-		usleep(500);
+		usleep(200);
 	}
 }
