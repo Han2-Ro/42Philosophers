@@ -47,7 +47,7 @@ int	parse_data(t_data *data, const int argc, const char *argv[])
 	if (data->n_philos < 1 || data->time_die < 1 || data->time_eat < 1
 		|| data->time_sleep < 1 || data->eat_n_times < 1)
 	{
-		printf("Error: All arguments must integers > 0.\n");
+		printf("Error: All arguments must be integers > 0.\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);
